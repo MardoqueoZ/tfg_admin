@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+{% block head %}
+    <title>Detalles de la noticia</title>
+{% endblock head %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>{{ recomendacion.nombre }}</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ recomendacion.contenido }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Autor: {{ recomendacion.autor.username }}</li>
+            <li class="list-group-item">Fecha de publicación: {{ recomendacion.fecha }}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url "recomendaciones" %}" class="card-link">Volver</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

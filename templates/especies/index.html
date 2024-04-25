@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>Especies</title>
+{% endblock head %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h3>Especies</h3>
+            <a href="{% url 'crear_especie' %}" class="btn btn-primary">Crear</a>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        {% for especie in especies %}
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ especie.nombre }}</h5>
+                    <p class="card-text">{{ especie.descripcion }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{% url 'editar_especie' especie.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'eliminar_especie' especie.id %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

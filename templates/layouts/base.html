@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+
+
+{% block head %}
+{% endblock head %}
+  
+  {% include 'includes/head.html' %}
+  <!-- DataTables -->
+  {% block extrastyle %}
+  
+  {% endblock extrastyle %}
+  {% block extrahead %}{% endblock extrahead %}
+  
+</head>
+<body>
+  
+  
+  {% block sidebar %}
+    {% include 'includes/menu.html' %}
+  {% endblock sidebar %}
+{% comment %} 
+  {% block header %}
+    {% include 'includes/navigation.html' %}
+  {% endblock header %} {% endcomment %}
+  
+  {% comment %} {% block preloader %}
+    {% include 'includes/pre-loader.html' %}
+  {% endblock preloader %} {% endcomment %}
+
+  <!-- [ Main Content ] start -->
+  <div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+          <!-- [ breadcrumb ] start -->
+          {% block breadcrumbs %}
+            
+          {% endblock breadcrumbs %}
+          <!-- [ breadcrumb ] end -->
+          <div class="main-body">
+            <div class="page-wrapper">
+              {% block content %}{% endblock content %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'includes/scripts.html' %}
+  {% block extra_js %}{% endblock extra_js %}
+
+  
+</body>
+</html>

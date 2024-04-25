@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+{% block head %}
+    <title>Detalles de la noticia</title>
+{% endblock head %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="card mt-4">
+        <img src="{{ noticia.foto_url }}" class="card-img-top" alt="Foto de la noticia">
+        <div class="card-header">
+            <h3>{{ noticia.titulo }}</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ noticia.contenido }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Autor: {{ noticia.usuario.username }}</li>
+            <li class="list-group-item">Fecha de publicación: {{ noticia.fecha }}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url "noticias" %}" class="card-link">Volver</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

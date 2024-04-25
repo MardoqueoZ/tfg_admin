@@ -1,0 +1,56 @@
+{% extends "layouts/base_auth.html" %}
+{% load static %}
+{% block head %}
+
+<title>Home</title>
+{% block extrastyle %}
+
+{% endblock extrastyle %}
+{% endblock head %}
+
+{% block content %}
+<div class="container" id="container">
+    <div class="form-container sign-up">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <img id="logo" src="{% static 'images/logo.png' %}" alt="logo" class="logo">
+            <h1>Crear Cuenta</h1>
+            <input type="number" name="ci" class="form-control" placeholder="Cédula"  required>
+            <input type="text" name="username" class="form-control" placeholder="Nombre de Usuario"  required>
+            <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+            <input type="password" name="password1" class="form-control" placeholder="Contraseña" required>
+            <input type="password" name="password2" class="form-control" placeholder="Confirma tu contraseña" required>
+            <button name="register">Registrarse</button>
+            
+        </form>
+    </div>
+    <div class="form-container sign-in">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <img id="logo" src="{% static 'images/logo.png' %}" alt="logo" class="logo">
+            <h1>Iniciar Sesión</h1>
+            {% if login_form.errors %}
+                <strong class="error">Usuario o contraseña incorrectos</strong>
+            {% endif %}
+            <input type="text" name="username" class="form-control" placeholder="Nombre de Usuario" required>
+            <input type="password" name="password" class="form-control" placeholder="Contraseña">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+            <button name="login">Entrar</button>
+        </form>
+    </div>
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1>¡Bienvenido de nuevo!</h1>
+                <p>Si ya tienes una cuenta, ingresa tus datos para acceder.</p>
+                <button class="hidden" id="log">Iniciar Sesión</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>¡Hola!</h1>
+                <p>Si no tienes una cuenta, regístrate completando los datos solicitados.</p>
+                <button class="hidden" id="reg">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Crear Recomendaciones{% endblock %}
+
+{% block content %}
+    <div class="contenedor">
+        <div class="card">
+            <div class="card-header">
+                <h3>Crear Recomendaciones</h3>
+                {% if forms.errors %}
+                    <div class="alert alert-danger">
+                        <span>Error</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="nombre">Titulo:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" required>
+                        <label for="contenido">Descripcion:</label>
+                        <textarea name="contenido" id="contenido" class="form-control" required></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary">
+                        <a href="{% url 'recomendaciones' %}" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>  
+{% endblock %}
