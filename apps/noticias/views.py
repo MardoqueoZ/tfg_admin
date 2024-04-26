@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from .forms import NoticiaForm
 from django.contrib.auth import get_user
 from django.shortcuts import redirect
@@ -111,3 +111,12 @@ def eliminar_noticia(request, noticia_id):
     # Eliminar la noticia
     noticia.delete()
     return redirect('noticias')
+
+
+# apis
+# obtener todas las noticias
+def api_noticias(request):
+    # obtener todas las noticias con los campos titulo, contenido, fecha y foto_url
+    noticias = Noticia.objects.all().values('titulo', 'contenido', 'fecha', 'foto_url')
+    # Devolver las noticias en formato JSON
+    return JsonResponse(list(noticias), safe=False)
