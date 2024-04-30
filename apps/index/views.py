@@ -63,6 +63,7 @@ def login_api(request):
     usuario = get_object_or_404(Usuario, ci=request.data['ci'])
     if not usuario.check_password(request.data['password']):
         return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_400_BAD_REQUEST)
+    # despues de verificar las credenciales, se crea o se obtiene el token de autenticacion
     token, _ = Token.objects.get_or_create(user=usuario)
     serializer = UsuarioSerializer(instance=usuario)
     return Response({"token": token.key, "usuario": serializer.data, "message": "Inicio de sesión exitoso"}, status=status.HTTP_200_OK)

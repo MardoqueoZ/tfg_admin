@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Especie
 from .forms import EspecieForm
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -38,3 +39,9 @@ def eliminar_especie(request, especie_id):
     especie = Especie.objects.get(id=especie_id)
     especie.delete()
     return redirect('especies')
+
+
+# obtener especie api
+def api_especies(request):
+    especies = Especie.objects.all().values('nombre')
+    return JsonResponse(list(especies), safe=False)
