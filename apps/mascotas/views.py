@@ -44,20 +44,22 @@ def ver_mascotas(request, cedula):
     mascotas = Mascota.objects.filter(usuario__ci=cedula) # el doble guion bajo es para acceder a los campos de la tabla relacionada
     return render(request, 'mascotas/ver_mascotas.html', {'mascotas': mascotas})
 
-# registrar mascota
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])  # Requiere que el usuario esté autenticado
 def registrar_mascota(request):
     if request.method == 'POST':
-        usuario = request.user  # El objeto User del usuario autenticado
-        serializer = MascotaSerializer(data=request.data) # Se crea un serializador con los datos de la petición
-        if serializer.is_valid():
-            archivo_imagen = request.FILES.get('imagen') # Se obtiene la imagen de la petición
-            if archivo_imagen:
-                nombre_archivo = f'mascotas/{uuid.uuid4()}.{archivo_imagen.name.split(".")[-1]}' # Se genera un nombre único para la imagen
-                imagen_url = storage.child(nombre_archivo).put(archivo_imagen)
-                serializer.save(usuario=usuario, imagen_url=imagen_url['downloadTokens']) # Se guarda la mascota en la base de datos
-                return Response(serializer.data, status=status.HTTP_201_CREATED)# Se responde con los datos de la mascota creada
-            else:
-                return Response({'error': 'No se proporcionó ninguna imagen'}, status=status.HTTP_400_BAD_REQUEST)# Se responde con un error si no se proporcionó ninguna imagen
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)# Se responde con los errores del serializador si no es válido
+        # Verificar si el usuario está autenticado
+        if request.user.is_authenticated:
+            usuario = request.user  # El objeto User del usuario autenticado
+            serializer = MascotaSerializer(data=request.data) # Se crea un serializador con los datos de la petición
+            if serializer.is_valid():
+                archivo_imagen = request.FILES.get('imagen') # Se obtiene la imagen de la petición
+                if archivo_imagen:
+                    nombre_archivo = f'mascotas/{uuid.uuid4()}.{archivo_imagen.name.split(".")[-1]}' # Se genera un nombre único para la imagen
+                    imagen_url = storage.child(nombre_archivo).put(archivo_imagen)
+                    serializer.save(usuario=usuario, imagen_url=imagen_url['downloadTokens']) # Se guarda la mascota en la base de datos
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)# Se responde con los datos de la mascota creada
+                else:
+                    return Response({'error': 'No se proporcionó ninguna imagen'}, status=status.HTTP_400_BAD_REQUEST)# Se responde con un error si no se proporcionó ninguna imagen
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)# Se responde con los errores del serializador si no es válido
+        else:
+            return Response({'error': 'Usuario no autenticado'}, status=status.HTTP_401_UNAUTHORIZED)  # Se responde con un error si el usuario no está autenticado
