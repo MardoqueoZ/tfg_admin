@@ -46,7 +46,7 @@ def ver_mascotas(request, cedula):
 
 # registrar mascota
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])  # Requiere que el usuario esté autenticado
+#@permission_classes([IsAuthenticated])  # Requiere que el usuario esté autenticado
 def registrar_mascota(request):
     if request.method == 'POST':
         usuario = request.user  # El objeto User del usuario autenticado
