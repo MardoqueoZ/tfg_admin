@@ -43,5 +43,5 @@ def eliminar_especie(request, especie_id):
 
 # obtener especie api
 def api_especies(request):
-    especies = Especie.objects.all().values('nombre')
+    especies = Especie.objects.all().values('id','nombre')
     return JsonResponse(list(especies), safe=False)
