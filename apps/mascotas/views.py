@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import authentication_classes
 from .serializers import MascotaSerializer
 import pyrebase
 import uuid
@@ -44,6 +46,9 @@ def ver_mascotas(request, cedula):
     mascotas = Mascota.objects.filter(usuario__ci=cedula) # el doble guion bajo es para acceder a los campos de la tabla relacionada
     return render(request, 'mascotas/ver_mascotas.html', {'mascotas': mascotas})
 
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 @api_view(['POST'])
 def registrar_mascota(request):
     if request.method == 'POST':
