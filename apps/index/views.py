@@ -9,6 +9,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 from .serializers import UsuarioSerializer
 
 # Create your views here.
@@ -43,6 +45,7 @@ def index(request):
 
 # registro de usuario api, app flutter
 @api_view(['POST'])
+@permission_classes([AllowAny])  # Permitir el acceso sin autenticación
 def register_api(request):
     serializer = UsuarioSerializer(data=request.data)
     if serializer.is_valid():
@@ -59,6 +62,7 @@ def register_api(request):
 
 # iniciar sesion api, app flutter
 @api_view(['POST'])
+@permission_classes([AllowAny])  # Permitir el acceso sin autenticación
 def login_api(request):
     usuario = get_object_or_404(Usuario, ci=request.data['ci'])
     if not usuario.check_password(request.data['password']):
