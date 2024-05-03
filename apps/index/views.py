@@ -66,7 +66,7 @@ def login_api(request):
     # despues de verificar las credenciales, se crea o se obtiene el token de autenticacion
     token, _ = Token.objects.get_or_create(user=usuario)
     serializer = UsuarioSerializer(instance=usuario)
-    return Response({"token": token.key, "usuario": serializer.data, "message": "Inicio de sesión exitoso"}, status=status.HTTP_200_OK)
+    return Response({"token": token.key, "usuario": serializer.data, "user_id": usuario.id, "message": "Inicio de sesión exitoso"}, status=status.HTTP_200_OK)
 
 
 # cerrar sesion api, app flutter
