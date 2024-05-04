@@ -63,7 +63,7 @@ def registrar_mascota(request: Request) -> Response:
                     imagen_url = storage.child(nombre_archivo).put(archivo_imagen)
                     serializer.save(usuario=usuario, imagen_url=imagen_url['downloadTokens']) # Se guarda la mascota en la base de datos
                     mascota_creada = serializer.instance  # Obtener la instancia de la mascota creada
-                    return Response({'mascota_id': mascota_creada.id}, status=status.HTTP_201_CREATED)  # Se responde con el ID de la mascota creada
+                    return Response({'mascota_id': mascota_creada.id, 'imagen_url': imagen_url}, status=status.HTTP_201_CREATED)  # Se responde con el ID de la mascota creada y la URL de la imagen almacenada en Firebase
                 else:
                     return Response({'error': 'No se proporcionó ninguna imagen'}, status=status.HTTP_400_BAD_REQUEST)# Se responde con un error si no se proporcionó ninguna imagen
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)# Se responde con los errores del serializador si no es válido
