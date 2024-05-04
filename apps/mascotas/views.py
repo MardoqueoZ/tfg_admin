@@ -69,3 +69,20 @@ def registrar_mascota(request: Request) -> Response:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)# Se responde con los errores del serializador si no es válido
         else:
             return Response({'error': 'Usuario no autenticado'}, status=status.HTTP_401_UNAUTHORIZED)  # Se responde con un error si el usuario no está autenticado
+        
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def obtener_mascotas(request: Request) -> Response:
+    if request.method == 'GET':
+        # devolver todas las mascotas del usuario autenticado
+        mascotas = Mascota.objects.filter(usuario=request.user)
+        if mascotas.exists():
+            serializer = MascotaSerializer(mascotas, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'mensaje': 'Aún no has creado mascotas'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        
