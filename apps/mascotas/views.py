@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
+from rest_framework.request import Request
 from .serializers import MascotaSerializer
 import pyrebase
 import uuid
@@ -49,8 +50,7 @@ def ver_mascotas(request, cedula):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-@api_view(['POST'])
-def registrar_mascota(request):
+def registrar_mascota(request: Request) -> Response:
     if request.method == 'POST':
         # Verificar si el usuario está autenticado
         if request.user.is_authenticated:
