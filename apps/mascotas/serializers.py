@@ -15,4 +15,5 @@ class MascotaObtencionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mascota
-        fields = ['nombre', 'especie', 'raza', 'edad', 'sexo', 'usuario', 'imagen_url']
+        fields = ['nombre', 'especie', 'raza', 'edad', 'sexo', 'usuario', 'imagenUrl']  # usar 'imagenUrl' en lugar de 'imagen_url'
+
