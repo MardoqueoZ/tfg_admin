@@ -10,14 +10,14 @@ import os
 import pyrebase
 
 config = {
-  "apiKey": "AIzaSyAKM1RT0QNYwYQfQ_bhoZk72urS6OK4PJE",
-  "authDomain": "tfgapp-385f5.firebaseapp.com",
-  "projectId": "tfgapp-385f5",
-  "storageBucket": "tfgapp-385f5.appspot.com",
-  "messagingSenderId": "53852604577",
-  "appId": "1:53852604577:web:d4b78801c3a7620b7dc8e0",
-  "measurementId": "G-360QX46885",
-  "databaseURL": "https://tfgapp-385f5-default-rtdb.europe-west1.firebasedatabase.app/"
+    "apiKey": "AIzaSyAKM1RT0QNYwYQfQ_bhoZk72urS6OK4PJE",
+    "authDomain": "tfgapp-385f5.firebaseapp.com",
+    "projectId": "tfgapp-385f5",
+    "storageBucket": "tfgapp-385f5.appspot.com",
+    "messagingSenderId": "53852604577",
+    "appId": "1:53852604577:web:d4b78801c3a7620b7dc8e0",
+    "measurementId": "G-360QX46885",
+    "databaseURL": "https://tfgapp-385f5-default-rtdb.europe-west1.firebasedatabase.app/"
 }
 
 firebase = pyrebase.initialize_app(config)

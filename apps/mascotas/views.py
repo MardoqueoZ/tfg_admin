@@ -10,7 +10,6 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
 from rest_framework.request import Request
 from .serializers import MascotaSerializer
-from .serializers import MascotaObtencionSerializer
 from django.http import JsonResponse
 import pyrebase
 import uuid
@@ -62,23 +61,23 @@ def registrar_mascota(request: Request) -> Response:
                 archivo_imagen = request.FILES.get('imagen') # Se obtiene la imagen de la petición
                 if archivo_imagen:
                     nombre_archivo = f'mascotas/{uuid.uuid4()}.{archivo_imagen.name.split(".")[-1]}' # Se genera un nombre único para la imagen
-                    imagen_url = storage.child(nombre_archivo).put(archivo_imagen)
-                    serializer.save(usuario=usuario, imagen_url=imagen_url['downloadTokens']) # Se guarda la mascota en la base de datos
+                    storage.child(nombre_archivo).put(archivo_imagen)
+                    imagen_url = storage.child(nombre_archivo).get_url(None)  # Obtener la URL de la imagen
+                    serializer.save(usuario=usuario, imagen_url=imagen_url) # Se guarda la mascota en la base de datos
                     mascota_creada = serializer.instance  # Obtener la instancia de la mascota creada
                     return Response({'mascota_id': mascota_creada.id, 'imagen_url': imagen_url}, status=status.HTTP_201_CREATED)  # Se responde con el ID de la mascota creada y la URL de la imagen almacenada en Firebase
                 else:
                     return Response({'error': 'No se proporcionó ninguna imagen'}, status=status.HTTP_400_BAD_REQUEST)# Se responde con un error si no se proporcionó ninguna imagen
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)# Se responde con los errores del serializador si no es válido
         else:
-            return Response({'error': 'Usuario no autenticado'}, status=status.HTTP_401_UNAUTHORIZED)  # Se responde con un error si el usuario no está autenticado
-        
+            return Response({'error': 'Usuario no autenticado'}, status=status.HTTP_401_UNAUTHORIZED)  # Se responde con un error si el usuario no está autenticado        
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def obtener_mascotas(request: Request) -> Response:
     # obtener todas las mascotas con los campos nombre, especie, raza, sexo e imagen_url
-    noticias = Mascota.objects.all().values('nombre', 'especie', 'raza', 'edad', 'sexo', 'imagen_url', 'usuario')
+    noticias = Mascota.objects.all().values('nombre', 'especie', 'raza', 'fecha_nacimiento', 'sexo', 'imagen_url', 'usuario')
     # Devolver las noticias en formato JSON
     return JsonResponse(list(noticias), safe=False)
         

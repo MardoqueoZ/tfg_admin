@@ -7,7 +7,7 @@ class Mascota(models.Model):
     nombre = models.CharField(max_length=50)
     raza = models.CharField(max_length=50)
     sexo = models.CharField()
-    edad = models.IntegerField()
+    fecha_nacimiento = models.DateField(null=True, blank=True)
     imagen = models.ImageField(upload_to='mascotas', null=True, blank=True)
     imagen_url = models.URLField(null=True, blank=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
