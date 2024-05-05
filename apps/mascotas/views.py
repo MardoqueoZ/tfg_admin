@@ -78,7 +78,7 @@ def registrar_mascota(request: Request) -> Response:
 @permission_classes([IsAuthenticated])
 def obtener_mascotas(request: Request) -> Response:
     # obtener todas las mascotas con los campos nombre, especie, raza, sexo e imagen_url
-    noticias = Mascota.objects.all().values('nombre', 'especie', 'raza', 'sexo', 'imagen_url', 'usuario')
+    noticias = Mascota.objects.all().values('nombre', 'especie', 'raza', 'edad', 'sexo', 'imagen_url', 'usuario')
     # Devolver las noticias en formato JSON
     return JsonResponse(list(noticias), safe=False)
         
