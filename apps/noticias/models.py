@@ -7,7 +7,7 @@ from apps.index.models import Usuario
 class Noticia(models.Model):
     titulo = models.CharField(max_length=100)
     contenido = models.TextField(null=True, blank=True)
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateField(auto_now_add=True)
     foto = models.ImageField(upload_to='noticias', null=True, blank=True)
     foto_url = models.URLField(null=True, blank=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
