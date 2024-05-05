@@ -11,6 +11,7 @@ from rest_framework.decorators import authentication_classes
 from rest_framework.request import Request
 from .serializers import MascotaSerializer
 from .serializers import MascotaObtencionSerializer
+from django.http import JsonResponse
 import pyrebase
 import uuid
 
@@ -76,14 +77,8 @@ def registrar_mascota(request: Request) -> Response:
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def obtener_mascotas(request: Request) -> Response:
-    if request.method == 'GET':
-        # devolver todas las mascotas del usuario autenticado
-        mascotas = Mascota.objects.filter(usuario=request.user)
-        if mascotas.exists():
-            serializer = MascotaObtencionSerializer(mascotas, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response({'mensaje': 'Aún no has creado mascotas'}, status=status.HTTP_200_OK)
-    else:
-        return Response({'error': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    # obtener todas las mascotas con los campos nombre, especie, raza, sexo e imagen_url
+    noticias = Mascota.objects.all().values('nombre', 'especie', 'raza', 'sexo', 'imagen_url')
+    # Devolver las noticias en formato JSON
+    return JsonResponse(list(noticias), safe=False)
         
