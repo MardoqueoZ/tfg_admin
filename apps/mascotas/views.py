@@ -10,6 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
 from rest_framework.request import Request
 from .serializers import MascotaSerializer
+from .serializers import MascotaObtencionSerializer
 import pyrebase
 import uuid
 
@@ -79,7 +80,7 @@ def obtener_mascotas(request: Request) -> Response:
         # devolver todas las mascotas del usuario autenticado
         mascotas = Mascota.objects.filter(usuario=request.user)
         if mascotas.exists():
-            serializer = MascotaSerializer(mascotas, many=True)
+            serializer = MascotaObtencionSerializer(mascotas, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({'mensaje': 'Aún no has creado mascotas'}, status=status.HTTP_200_OK)

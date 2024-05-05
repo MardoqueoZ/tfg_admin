@@ -7,3 +7,12 @@ class MascotaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mascota
         fields = ['nombre', 'especie', 'raza', 'edad', 'sexo', 'usuario', 'imagen']
+        
+
+# serializador para mostrar las mascotas de un usuario
+class MascotaObtencionSerializer(serializers.ModelSerializer):
+    imagenUrl = serializers.URLField(source='imagen_url', read_only=True)
+
+    class Meta:
+        model = Mascota
+        fields = ['nombre', 'especie', 'raza', 'edad', 'sexo', 'usuario', 'imagen_url']
