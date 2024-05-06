@@ -9,8 +9,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import permission_classes
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import authentication_classes
 from .serializers import UsuarioSerializer
 
 # Create your views here.
@@ -74,10 +76,12 @@ def login_api(request):
 
 
 # cerrar sesion api, app flutter
-@api_view(['POST'])
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def logout_api(request):
     request.auth.delete()
-    return Response({"message": "Cierre de sesión exitoso"}, status=status.HTTP_200_OK)
+    return Response({'message': 'Cierre de sesión exitoso'}, status=status.HTTP_200_OK)
 
 
 # Cierre de sesión
