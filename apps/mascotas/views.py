@@ -82,32 +82,29 @@ def obtener_mascotas(request: Request) -> Response:
     return JsonResponse(list(mascotas), safe=False)
 
 
-# editar mascota api
 @api_view(['PUT'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def editar_mascota(request: Request, mascota_id: int) -> Response:
     if request.method == 'PUT':
-        # Verificar si el usuario está autenticado
         if request.user.is_authenticated:
-            # Obtener la mascota a editar
             mascota = Mascota.objects.filter(id=mascota_id, usuario=request.user).first()
             if mascota:
-                serializer = MascotaSerializer(mascota, data=request.data, partial=True)  # Se crea un serializador con los datos de la petición
+                serializer = MascotaSerializer(mascota, data=request.data, partial=True)
                 if serializer.is_valid():
                     archivo_imagen = request.FILES.get('imagen')
-                    imagen_url = mascota.imagen_url  # Valor predeterminado
+                    # Si no se proporciona un nuevo archivo de imagen, mantener la imagen actual
+                    imagen_url = mascota.imagen_url
                     if archivo_imagen:
                         nombre_archivo = f'mascotas/{uuid.uuid4()}.{archivo_imagen.name.split(".")[-1]}'
                         storage.child(nombre_archivo).put(archivo_imagen)
                         imagen_url = storage.child(nombre_archivo).get_url(None)
-                        serializer.save(imagen_url=imagen_url)
-                    else:
-                        serializer.save()
+                    serializer.save(imagen_url=imagen_url)
                     return Response({'mascota_id': mascota.id, 'imagen_url': imagen_url}, status=status.HTTP_200_OK)
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response({'error': 'No se encontró la mascota'}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response({'error': 'Usuario no autenticado'}, status=status.HTTP_401_UNAUTHORIZED)
+
 
         
