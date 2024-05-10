@@ -109,5 +109,25 @@ def editar_mascota(request: Request, mascota_id: int) -> Response:
             return Response({'error': 'No se encontró la mascota'}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response({'error': 'Usuario no autenticado'}, status=status.HTTP_401_UNAUTHORIZED)
-
         
+
+from rest_framework.response import Response
+
+@api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def eliminar_mascota(request: Request, mascota_id: int) -> Response:
+    if request.method == 'DELETE':
+        # Verificar si el usuario está autenticado
+        if request.user.is_authenticated:
+            # Obtener la mascota a eliminar
+            mascota = Mascota.objects.filter(id=mascota_id, usuario=request.user).first()
+            if mascota:
+                mascota.delete()
+                return Response({'message': 'Mascota eliminada correctamente'}, status=204)
+            else:
+                return Response({'error': 'No se encontró la mascota'}, status=404)
+        else:
+            return Response({'error': 'Usuario no autenticado'}, status=401)
+    else:
+        return Response({'error': 'Método no permitido'}, status=405)
