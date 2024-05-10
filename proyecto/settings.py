@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'apps.recomendaciones',
     'apps.especies',
     'apps.mascotas',
+    'apps.vacunas',
+    'apps.vacunaciones',
     'rest_framework',
     'rest_framework.authtoken', # genera token de autenticacion
 ]
