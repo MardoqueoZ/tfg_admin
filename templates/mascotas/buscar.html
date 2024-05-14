@@ -41,6 +41,7 @@
                         <thead class="">
                             <tr>
                                 <th>Nombre</th>
+                                <th>Apellido</th>
                                 <th>Cédula</th>
                                 <th>Acciones</th>
                             </tr>
@@ -48,7 +49,8 @@
                         <tbody>
                             {% for duenho in duenhos %}
                             <tr>
-                                <td>{{ duenho.username }}</td>
+                                <td>{{ duenho.first_name }}</td>
+                                <td>{{ duenho.last_name }}</td>
                                 <td>{{ duenho.ci }}</td>
                                 <td>
                                     <a href="{% url 'ver_mascotas' cedula=duenho.ci %}" class="btn btn-primary">Ver Mascotas</a>
@@ -62,9 +64,6 @@
         </div>    
         {% endif %}
     </div>
-   
-
-    
 </div>
 
 {% endblock %}

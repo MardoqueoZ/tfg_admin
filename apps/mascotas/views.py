@@ -46,7 +46,9 @@ def buscar_duenho(request):
 def ver_mascotas(request, cedula):
     # Filtrar las mascotas asociadas al usuario con la cédula proporcionada
     mascotas = Mascota.objects.filter(usuario__ci=cedula) # el doble guion bajo es para acceder a los campos de la tabla relacionada
-    return render(request, 'mascotas/ver_mascotas.html', {'mascotas': mascotas})
+    # nombre y apellido del usuario
+    usuario = Usuario.objects.get(ci=cedula)
+    return render(request, 'mascotas/ver_mascotas.html', {'mascotas': mascotas, 'usuario': usuario})
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -110,9 +112,8 @@ def editar_mascota(request: Request, mascota_id: int) -> Response:
         else:
             return Response({'error': 'Usuario no autenticado'}, status=status.HTTP_401_UNAUTHORIZED)
         
-
-from rest_framework.response import Response
-
+        
+# eliminar mascota api
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
