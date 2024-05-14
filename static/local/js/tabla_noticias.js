@@ -12,7 +12,7 @@ function initDataTable() {
     dataTableNoticias = $('#datatable-noticias').DataTable({
         'lengthMenu': [5, 10, 25],
         language: {
-            url: '//cdn.datatables.net/plug-ins/2.0.5/i18n/es-ES.json',
+            url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/es-MX.json',
         },
         'processing': true,
         responsive: true,

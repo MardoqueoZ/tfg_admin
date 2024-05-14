@@ -1,15 +1,15 @@
-var dataTableReco; // Variable global para almacenar la instancia de DataTable
+var dataTableVacunas; // Variable global para almacenar la instancia de DataTable
 
 $(document).ready(function() {
     initDataTable(); // Inicializar DataTable al cargar la página
 });
 
 function initDataTable() {
-    if (dataTableReco) {
-        dataTableReco.destroy(); // Destruir la instancia anterior si existe
+    if (dataTableVacunas) {
+        dataTableVacunas.destroy(); // Destruir la instancia anterior si existe
     }
 
-    dataTableNoticias = $('#datatable-recomendaciones').DataTable({
+    dataTableVacunas = $('#datatable-vacunas').DataTable({
         'lengthMenu': [5, 10, 25],
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/es-MX.json',
@@ -21,4 +21,3 @@ function initDataTable() {
         ]
     });
 }
-
