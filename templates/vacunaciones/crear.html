@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <title>Crear Vacunación</title>
+{% endblock head %}
+
+{% block content %}
+    <div class="contenedor">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-none d-md-block">
+                    <h3 class="">Registrar Vacunación</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        
+                        <br>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <a href="{% url 'vacunaciones' mascota.id %}" class="btn btn-secondary">Cancelar</a>
+                    </form>        
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

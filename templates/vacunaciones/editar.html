@@ -1,0 +1,47 @@
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <title>Editar Vacunación</title>
+{% endblock %}
+
+{% block content %}
+    <div class="contenedor">
+        <div class="card">
+            <div class="card-header">
+                <h3>Editar Vacunación</h3>
+            </div>
+            <div class="card-body">
+                <div class="form">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <p>
+                            {{ form.vacuna.label_tag }}<br>
+                            {{ form.vacuna.errors }}
+                            {{ form.vacuna }}
+                        </p>
+                        <p>
+                            {{ form.dosis_aplicada.label_tag }}<br>
+                            {{ form.dosis_aplicada.errors }}
+                            {{ form.dosis_aplicada }}
+                        </p>
+                        <p>
+                            {{ form.veterinario.label_tag }}<br>
+                            {{ form.veterinario.errors }}
+                            {{ form.veterinario }}
+                        </p>
+                        <p>
+                            {{ form.fecha_vacunacion.label_tag }}<br>
+                            {{ form.fecha_vacunacion.errors }}
+                            <input type="date" name="{{ form.fecha_vacunacion.name }}" id="{{ form.fecha_vacunacion.auto_id }}" class="form-control" value="{{ form.fecha_vacunacion.value|date:'Y-m-d' }}">
+                        </p>
+                        
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <a href="{% url 'vacunaciones' mascota.id %}" class="btn btn-secondary">Cancelar</a>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>  
+    </div>
+{% endblock %}
