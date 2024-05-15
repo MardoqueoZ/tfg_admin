@@ -7,7 +7,7 @@
     <style>
         .card {
             max-width: 300px; /* Tamaño máximo de la tarjeta */
-            margin-bottom: 50px; /* Espacio entre tarjetas */
+            margin-left: 50px; /* Espacio entre tarjetas */
         }
 
         .card-img-top {
@@ -23,7 +23,7 @@
         <br>
         <div class="row">
             {% for mascota in mascotas %}
-            <div class="col-md-6 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="lista_de_mascotas">
                     <div class="card">
                         <img src="{{ mascota.imagen_url }}" class="card-img-top" alt="...">
@@ -56,8 +56,9 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
+
