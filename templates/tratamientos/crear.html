@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <title>Registrar Tratamiento</title>
+{% endblock head %}
+
+{% block content %}
+    <div class="contenedor">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-none d-md-block">
+                    <h3 class="">Registrar Tratamiento</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <p>
+                            {{ form.nombre.label_tag }}<br>
+                            {{ form.nombre.errors }}
+                            {{ form.nombre }}
+                        </p>
+                        
+                        <p>
+                            {{ form.descripcion.label_tag }}<br>
+                            {{ form.descripcion.errors }}
+                            {{ form.descripcion }}
+                        </p>
+                        
+                        <p>
+                            {{ form.estado.label_tag }}<br>
+                            {{ form.estado.errors }}
+                            {{ form.estado }}
+                        </p>
+                        
+                        <p>
+                            {{ form.veterinario.label_tag }}<br>
+                            {{ form.veterinario.errors }}
+                            {{ form.veterinario }}
+                        </p>
+                        
+                        <p>
+                            {{ form.fecha_inicio.label_tag }}<br>
+                            {{ form.fecha_inicio.errors }}
+                            <input type="date" name="{{ form.fecha_inicio.name }}" id="{{ form.fecha_inicio.auto_id }}" class="form-control" value="{{ form.fecha_inicio.value|date:'Y-m-d' }}">
+                        </p>
+                        
+                        <p>
+                            {{ form.fecha_fin.label_tag }}<br>
+                            {{ form.fecha_fin.errors }}
+                            <input type="date" name="{{ form.fecha_fin.name }}" id="{{ form.fecha_fin.auto_id }}" class="form-control" value="{{ form.fecha_fin.value|date:'Y-m-d' }}">
+                        </p>
+                        
+                        <br>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <a href="{% url 'tratamientos' mascota.id %}" class="btn btn-secondary">Cancelar</a>
+                    </form>        
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

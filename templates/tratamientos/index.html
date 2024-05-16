@@ -1,0 +1,84 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>Tratamientos</title>
+{% endblock head %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h3>Tratamientos</h3>
+            <div>
+                <a href="{% url 'crear_tratamiento' mascota.id %}" class="btn btn-primary">Crear</a>
+                <a href="{{ url_regreso }}" class="btn btn-secondary d-none d-md-inline-block">Regresar</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Tabla -->
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table id="datatable-tratamientos" class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mascota</th>
+                            <th>Tratamiento</th>
+                            <th>Estado</th>
+                            <th>Veterinaria/o</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_tratamientos">
+                        {% for tratamiento in tratamientos %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ tratamiento.mascota }}</td>
+                            <td>{{ tratamiento.nombre }}</td>
+                            <td>{{ tratamiento.estado }}</td>
+                            <td>{{ tratamiento.veterinario }}</td>
+                            <td>
+                                <div class="form-group">
+                                    <a href="{% url 'ver_tratamiento' tratamiento.id mascota.id %}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                    <a href="{% url 'editar_tratamiento' tratamiento.id mascota.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                    
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ¿Estás seguro que quieres eliminar esta vacunación?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <a href="{% url 'eliminar_tratamiento' tratamiento.id mascota.id %}" class="btn btn-danger">Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'local/js/tabla_tratamiento.js' %}"></script>
+{% endblock extra_js %}     

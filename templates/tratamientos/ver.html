@@ -1,0 +1,23 @@
+<!-- tratamientos/ver.html -->
+
+{% extends "layouts/base.html" %}
+{% block title %}Detalle del Tratamiento{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="my-4">Detalle del Tratamiento</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre del Tratamiento:</strong> {{ tratamiento.nombre }}</p>
+            <p><strong>Fecha de Inicio:</strong> {{ tratamiento.fecha_inicio }}</p>
+            <p><strong>Descripción:</strong> {{ tratamiento.descripcion }}</p>
+            <p><strong>Estado:</strong> {{ tratamiento.estado }}</p>
+            <p><strong>Médico Responsable:</strong> {{ tratamiento.medico_responsable }}</p>
+            <p><strong>Fecha de Fin:</strong> {{ tratamiento.fecha_fin }}</p>
+            <p><a href="{{ url_regreso }}" class="btn btn-secondary">Volver</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
