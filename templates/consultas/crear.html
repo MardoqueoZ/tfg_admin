@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+
+{% block head %}
+    <title>Registrar Consulta</title>
+{% endblock head %}
+
+{% block content %}
+    <div class="contenedor">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-none d-md-block">
+                    <h3 class="">Registrar Consulta</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <p>
+                            {{ form.fecha.label_tag }}<br>
+                            {{ form.fecha.errors }}
+                            <input type="date" name="{{ form.fecha.name }}" id="{{ form.fecha.auto_id }}" class="form-control" value="{{ form.fecha.value|date:'Y-m-d' }}">
+                        </p>
+                        
+                        <p>
+                            {{ form.motivo.label_tag }}<br>
+                            {{ form.motivo.errors }}
+                            {{ form.motivo }}
+                        </p>
+                        
+                        <p>
+                            {{ form.indicacion.label_tag }}<br>
+                            {{ form.indicacion.errors }}
+                            {{ form.indicacion }}
+                        </p>
+                        
+                        <p>
+                            {{ form.veterinario.label_tag }}<br>
+                            {{ form.veterinario.errors }}
+                            {{ form.veterinario }}
+                        </p>
+                        
+                        
+                        <br>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <a href="{% url 'consultas' mascota.id %}" class="btn btn-secondary">Cancelar</a>
+                    </form>        
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

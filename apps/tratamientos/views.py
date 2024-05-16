@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from apps.mascotas.models import Mascota
 from .models import Tratamiento
@@ -38,9 +37,9 @@ def crear_tratamiento(request, mascota_id):
         # Verifica si el formulario es válido
         if form.is_valid():
             # Asigna la instancia de la mascota al formulario antes de guardarlo
-            vacunacion = form.save(commit=False)
-            vacunacion.mascota = mascota
-            vacunacion.save()
+            tratamiento = form.save(commit=False)
+            tratamiento.mascota = mascota
+            tratamiento.save()
             
             return redirect('tratamientos', mascota_id=mascota_id)
         else:
@@ -55,7 +54,7 @@ def crear_tratamiento(request, mascota_id):
 # editar tratamiento
 @login_required
 def editar_tratamiento(request, tratamiento_id, mascota_id):
-    # Obtén la instancia de la vacunación con el ID proporcionado o muestra un error 404 si no existe
+    # Obtén la instancia del tratamiento con el ID proporcionado o muestra un error 404 si no existe
     tratamiento = get_object_or_404(Tratamiento, pk=tratamiento_id)
     
     # Obtén la instancia de la mascota

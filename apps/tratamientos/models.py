@@ -12,5 +12,8 @@ class Tratamiento(models.Model):
     fecha_fin = models.DateField(null=True, blank=True)
     mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE)
     
+    class Meta:
+        db_table = 'tratamientos'
+        
     def __str__(self):
-        return self.nombre    
+        return self.nombre 

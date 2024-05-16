@@ -1,0 +1,34 @@
+<!-- consultas/ver.html -->
+
+{% extends "layouts/base.html" %}
+{% block head %}
+    <title>Detalle de la Consulta</title>
+{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="my-4">Detalle de la Consulta</h1>
+        </div>
+        <div class="card-body">
+            <div class="form">
+                <p>
+                    <strong>Fecha:</strong> {{ consulta.fecha|date:"d/m/Y" }}
+                </p>
+                <p>
+                    <strong>Motivo:</strong> {{ consulta.motivo }}
+                </p>
+                <p>
+                    <strong>Indicación:</strong> {{ consulta.indicacion }}
+                </p>
+                <p>
+                    <strong>Veterinario:</strong> {{ consulta.veterinario }}
+                </p>
+                <br>
+                <a href="{{ url_regreso }}" class="btn btn-secondary">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
