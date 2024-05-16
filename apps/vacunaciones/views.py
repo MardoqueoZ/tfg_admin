@@ -2,6 +2,12 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.response import Response
+from django.http import JsonResponse
 from apps.mascotas.models import Mascota
 from django.urls import reverse
 from .models import Vacunacion
@@ -93,3 +99,15 @@ def eliminar_vacunacion(request, vacunacion_id, mascota_id):
     # Elimina la instancia y redirige a la lista
     vacunacion.delete()
     return redirect('vacunaciones', mascota_id=mascota_id)
+
+
+# APIS
+# api lista de vacunaciones
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def api_vacunaciones(request, mascota_id) -> Response:
+    # obtener las vacunaciones de la mascota
+    vacunaciones = Vacunacion.objects.filter(mascota__id=mascota_id).values('id', 'vacuna', 'dosis_aplicada', 'veterinario', 'fecha_vacunacion', 'mascota')
+    # Devolver las vacunaciones en formato JSON
+    return JsonResponse(list(vacunaciones), safe=False)
