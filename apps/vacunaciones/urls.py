@@ -9,4 +9,7 @@ urlpatterns = [
     
     # APIS
     path('api/vacunaciones/<int:mascota_id>/', views.api_vacunaciones),
+    path('api/vacunaciones/crear/<int:mascota_id>/', views.api_crear_vacunacion),
+    path('api/vacunaciones/editar/<int:vacunacion_id>/<int:mascota_id>/', views.api_editar_vacunacion),
+    path('api/vacunaciones/eliminar/<int:vacunacion_id>/<int:mascota_id>/', views.api_eliminar_vacunacion),
 ]
