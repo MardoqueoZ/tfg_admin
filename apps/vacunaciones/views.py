@@ -160,7 +160,7 @@ def api_eliminar_vacunacion(request, vacunacion_id, mascota_id) -> Response:
         vacunacion = Vacunacion.objects.filter(id=vacunacion_id, mascota=mascota_id).first()
         if vacunacion:
             vacunacion.delete()
-            return Response({'message': 'Eliminación de vacunación exitosa'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Eliminación de vacunación exitosa'}, status=204)
         return Response({'error': 'No se encontró la vacunación'}, status=status.HTTP_404_NOT_FOUND)
     return Response({'error': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         
