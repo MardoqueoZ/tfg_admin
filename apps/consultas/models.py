@@ -5,7 +5,7 @@ from apps.mascotas.models import Mascota
 class Consulta(models.Model):
     fecha = models.DateField()
     motivo = models.CharField(max_length=100)
-    indicacion = models.TextField()
+    indicacion = models.TextField(null=True, blank=True)
     veterinario = models.CharField(max_length=100)
     mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE)
     
