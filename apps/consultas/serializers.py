@@ -4,4 +4,4 @@ from .models import Consulta
 class ConsultaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Consulta
-        fields = ['fecha', 'motivo', 'indicacion', 'veterinario', 'mascota']
+        fields = ['fecha_consulta', 'motivo', 'indicacion', 'veterinario', 'mascota']

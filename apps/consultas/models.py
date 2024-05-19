@@ -3,7 +3,7 @@ from apps.mascotas.models import Mascota
 
 # Create your models here.
 class Consulta(models.Model):
-    fecha = models.DateField()
+    fecha_consulta = models.DateField()
     motivo = models.CharField(max_length=100)
     indicacion = models.TextField(null=True, blank=True)
     veterinario = models.CharField(max_length=100)
@@ -12,5 +12,3 @@ class Consulta(models.Model):
     class Meta:
         db_table = 'consultas'
         
-    def __str__(self):
-        return self.motivo
