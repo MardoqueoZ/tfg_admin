@@ -154,7 +154,7 @@ def api_editar_tratamiento(request, tratamiento_id, mascota_id) -> Response:
                 serializer.save()
                 return Response({'tratamiento_id': tratamiento.id, 'message': 'Actualización de tratamiento exitoso'}, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'error': 'No se encontró la vacunación'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'No se encontró el tratamiento'}, status=status.HTTP_404_NOT_FOUND)
     return Response({'error': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 # api eliminar tratamiento
