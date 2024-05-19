@@ -121,7 +121,7 @@ def eliminar_consulta(request, consulta_id, mascota_id):
 @permission_classes([IsAuthenticated])
 def api_consultas(request, mascota_id) -> Response:
     # obtener las consultas de la mascota
-    consultas = Consulta.objects.filter(mascota__id=mascota_id).values('id', 'fecha', 'motivo', 'indicacion', 'veterinario', 'mascota')
+    consultas = Consulta.objects.filter(mascota__id=mascota_id).values('id', 'fecha_consulta', 'motivo', 'indicacion', 'veterinario', 'mascota')
     # Devolver las consultas en formato JSON
     return JsonResponse(list(consultas), safe=False)
 
