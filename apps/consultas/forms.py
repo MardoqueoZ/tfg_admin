@@ -2,7 +2,7 @@ from django import forms
 from apps.consultas.models import Consulta
 
 class FormConsulta(forms.ModelForm):
-    fecha = forms.DateField(
+    fecha_consulta = forms.DateField(
         label='Fecha',
         widget=forms.DateInput(
             attrs={
@@ -48,5 +48,5 @@ class FormConsulta(forms.ModelForm):
     
     class Meta:
         model = Consulta
-        fields = ['fecha', 'motivo', 'indicacion', 'veterinario']
+        fields = ['fecha_consulta', 'motivo', 'indicacion', 'veterinario']
         
