@@ -18,12 +18,8 @@ from rest_framework.decorators import authentication_classes
 from .serializers import UsuarioSerializer
 
 # Create your views here.
-
-
-
 def index(request):
     login_form = LoginForm()
-
     if request.method == 'POST':
         login_form = LoginForm(request, data=request.POST)
         if login_form.is_valid():
@@ -42,8 +38,6 @@ def index(request):
             messages.error(request, 'Usuario o contraseña incorrectos')
 
     return render(request, 'inicio/index.html', {'login_form': login_form})
-
-
 
 
 # registro de usuario api, app flutter
@@ -88,7 +82,7 @@ def logout_api(request):
 # Cierre de sesión
 def logout(request):
     django_logout(request)
-    return render(request, 'inicio/index.html')
+    return redirect('index')
 
 
     

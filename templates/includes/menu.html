@@ -1,65 +1,72 @@
 {% load static %}
 <head>
     {% include "includes/head.html" %}
-    <!-- Incluye el CSS de Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div class="menu" id="sidebar-wrapper">
-            <div class="sidebar-heading">Mi Sitio</div>
+            <div class="sidebar-heading text-light bg-primary">Mi Sitio</div>
             <ul class="nav flex-column list-group list-group-flush">
                 <li class="nav-item">
-                    <a href="{% url 'noticias' %}" class="nav-link active">
+                    <a href="{% url 'noticias' %}" class="nav-link text-light">
                         <i class="fas fa-home"></i> Noticias
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'recomendaciones' %}" class="nav-link active">
+                    <a href="{% url 'recomendaciones' %}" class="nav-link text-light">
                         <i class="fas fa-notes-medical"></i> Recomendaciones
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'especies' %}" class="nav-link active">
+                    <a href="{% url 'especies' %}" class="nav-link text-light">
                         <i class="fas fa-dog"></i> Especies
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'buscar_duenho' %}" class="nav-link active">
+                    <a href="{% url 'buscar_duenho' %}" class="nav-link text-light">
                         <i class="fas fa-search"></i> Buscar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-light" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                     </a>
                 </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        {% comment %} <div id="page-content-wrapper" class="contenedor">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
-        </div> {% endcomment %}
-        <!-- /#page-content-wrapper -->
+        <!-- Confirm Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas cerrar sesión?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="{% url 'logout' %}" class="btn btn-primary">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /#wrapper -->
 
-    <!-- Scripts de Bootstrap y jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlXr2OZ1INlJ1TCTfExARITB9R4boqT9LFlGxuF4dHQp1Afnvyb9nHJg9E" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgEpW8dfk6Q6Mf7T9j0g5X3EMdseX3I1LlVxPA74rM0osJkXmjE" crossorigin="anonymous"></script>
-    
     <!-- Script para toggle del sidebar -->
     <script>
-        $("#menu-toggle").click(function(e) {
+        document.getElementById('menu-toggle').addEventListener('click', function(e) {
             e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
+            document.getElementById('wrapper').classList.toggle('toggled');
         });
     </script>
-    
+
     <style>
         #wrapper.toggled #sidebar-wrapper {
             margin-left: -250px;
