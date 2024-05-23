@@ -14,8 +14,8 @@ function initDataTable() {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/es-MX.json',
         },
+        'responsive': true,
         'processing': true,
-        responsive: true,
         'columnDefs': [
             { 'className': 'dt-center', 'targets': '_all' } // Centrar el texto en todas las columnas
         ]

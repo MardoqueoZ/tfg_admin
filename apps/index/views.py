@@ -9,6 +9,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
+from django.contrib.auth.models import Group
+from django.contrib import messages
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import permission_classes
 from rest_framework.authentication import TokenAuthentication
@@ -17,32 +19,31 @@ from .serializers import UsuarioSerializer
 
 # Create your views here.
 
+
+
 def index(request):
-    register_form = RegisterForm()
     login_form = LoginForm()
 
     if request.method == 'POST':
-        if 'register' in request.POST:
-            register_form = RegisterForm(request.POST)
-            if register_form.is_valid():
-                register_form.save()
-                # Redirige al usuario a la página de inicio de sesión después del registro exitoso
-                return redirect('index')
-        elif 'login' in request.POST:
-            login_form = LoginForm(request, data=request.POST)
-            if login_form.is_valid():
-                # Autentica al usuario
-                user = authenticate(request, username=login_form.cleaned_data['username'], password=login_form.cleaned_data['password'])
-                if user:
+        login_form = LoginForm(request, data=request.POST)
+        if login_form.is_valid():
+            user = authenticate(request, username=login_form.cleaned_data['username'], password=login_form.cleaned_data['password'])
+            if user:
+                if user.is_superuser or Group.objects.get(name='administrador') in user.groups.all():
                     login(request, user)
-                    # Redirige al usuario a la página deseada después del inicio de sesión
                     next_page = request.GET.get('next', '')
                     if next_page:
                         return redirect(next_page)
                     else:
                         return redirect('noticias')
+                else:
+                    messages.error(request, 'No tienes los permisos para acceder a esta página')
+        else:
+            messages.error(request, 'Usuario o contraseña incorrectos')
 
-    return render(request, 'inicio/index.html', {'register_form': register_form, 'login_form': login_form})
+    return render(request, 'inicio/index.html', {'login_form': login_form})
+
+
 
 
 # registro de usuario api, app flutter

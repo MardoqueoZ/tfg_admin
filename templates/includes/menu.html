@@ -1,34 +1,125 @@
 {% load static %}
 <head>
     {% include "includes/head.html" %}
+    <!-- Incluye el CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-<nav class="menu">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link active" href="{% url 'noticias' %}">
-                <i class="fas fa-home"></i> Noticias
-            </a>
-        </li>
-        
-        <li class="nav-item">
-            <a class="nav-link active" href="{% url 'recomendaciones' %}">
-                <i class="fas fa-notes-medical"></i> Recomendaciones
-            </a>
-        </li> 
-        
-        <li class="nav-item">
-            <a class="nav-link active" href="{% url 'especies' %}">
-                <i class="fas fa-dog"></i> Especies
-            </a>
-        </li>
-        
-        <li class="nav-item">
-            <a class="nav-link active" href="{% url 'buscar_duenho' %}">
-                <i class="fas fa-search"></i> Buscar
-            </a>
-        </li> 
-        
-        
-    </ul>
-</nav>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="menu" id="sidebar-wrapper">
+            <div class="sidebar-heading">Mi Sitio</div>
+            <ul class="nav flex-column list-group list-group-flush">
+                <li class="nav-item">
+                    <a href="{% url 'noticias' %}" class="nav-link active">
+                        <i class="fas fa-home"></i> Noticias
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'recomendaciones' %}" class="nav-link active">
+                        <i class="fas fa-notes-medical"></i> Recomendaciones
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'especies' %}" class="nav-link active">
+                        <i class="fas fa-dog"></i> Especies
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'buscar_duenho' %}" class="nav-link active">
+                        <i class="fas fa-search"></i> Buscar
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        {% comment %} <div id="page-content-wrapper" class="contenedor">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div> {% endcomment %}
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlXr2OZ1INlJ1TCTfExARITB9R4boqT9LFlGxuF4dHQp1Afnvyb9nHJg9E" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgEpW8dfk6Q6Mf7T9j0g5X3EMdseX3I1LlVxPA74rM0osJkXmjE" crossorigin="anonymous"></script>
+    
+    <!-- Script para toggle del sidebar -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+    
+    <style>
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: -250px;
+        }
+
+        #sidebar-wrapper {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 1000;
+            overflow-y: auto;
+            background: #001f3f;
+            color: #fff;
+            transition: margin 0.25s ease-out;
+        }
+
+        #page-content-wrapper {
+            flex: 1;
+            padding-left: 250px;
+            transition: padding 0.25s ease-out;
+        }
+
+        #wrapper.toggled #page-content-wrapper {
+            padding-left: 0;
+        }
+
+        .sidebar-heading {
+            padding: 1rem;
+            font-size: 1.25rem;
+            text-align: center;
+            background-color: #203354;
+            color: #fff;
+        }
+
+        .nav-item {
+            margin-top: 10px;
+            padding: 10px 0;
+        }
+
+        .nav-item a {
+            font-size: 16px;
+            padding: 8px 15px;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-item i.fas {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .nav-item:hover {
+            background-color: #2f2c79;
+        }
+
+        .card-body {
+            margin: 10px 0;
+        }
+    </style>
+</body>
