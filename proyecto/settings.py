@@ -109,23 +109,23 @@ DATABASES = {
         'PORT': 5433,
     }
 }
-# import dj_database_url
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgres://postgres:MZF121@localhost:5433/django_db',
-#         conn_max_age=600
-#     )
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres.jmotaxttnoccljwloetl',
-#         'PASSWORD': 'GEx8WihJDIFJn8LC',
-#         'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
-#         'PORT': 5432,
-#     }
-# }
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgres://postgres:MZF121@localhost:5433/django_db',
+        conn_max_age=600
+    )
+}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.rqjpdfqjwrcyzddbtdip',
+        'PASSWORD': 'tjqVbpht2Ewig7q6',
+        'HOST': 'aws-0-us-west-1.pooler.supabase.com',
+        'PORT': 6543,
+    }
+}
 
 
 # Password validation
