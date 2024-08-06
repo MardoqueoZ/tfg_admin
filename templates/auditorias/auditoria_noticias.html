@@ -1,0 +1,33 @@
+{% block content %}
+    <!-- Tabla -->
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table id="datatable_au_noticias" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Titulo</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in registros_noticias %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ registro.noticia_id }}</td>
+                            <td>{{ registro.titulo }}</td>
+                            <td>{{ registro.usuario_id }}</td>
+                            <td>{{ registro.fecha_hora }}</td>
+                            <td>{{ registro.accion }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

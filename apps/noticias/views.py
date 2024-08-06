@@ -4,7 +4,7 @@ from .forms import NoticiaForm
 from django.contrib.auth import get_user
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from .models import Noticia
+from .models import Noticia, AuditoriaNoticia
 from django.core.exceptions import ObjectDoesNotExist
 import os
 import pyrebase
@@ -112,11 +112,9 @@ def eliminar_noticia(request, noticia_id):
     noticia.delete()
     return redirect('noticias')
 
-
-# apis
-# obtener todas las noticias
-def api_noticias(request):
-    # obtener todas las noticias con los campos titulo, contenido, fecha y foto_url
-    noticias = Noticia.objects.all().values('titulo', 'contenido', 'fecha', 'foto_url')
-    # Devolver las noticias en formato JSON
-    return JsonResponse(list(noticias), safe=False)
+@login_required
+def auditoria_noticias(request):
+    # obtener todas las auditorias de noticias con los campos noticia, titulo, usuario, accion y fecha_hora
+    registros_noticias = AuditoriaNoticia.objects.all().values('noticia_id', 'titulo', 'usuario_id', 'accion', 'fecha_hora')
+    return render(request, 'auditorias/auditoria_noticias.html', {'registros_noticias': registros_noticias})
+    

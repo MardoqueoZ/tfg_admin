@@ -193,7 +193,7 @@ body{
 
 /* Estilos al pasar el cursor sobre los elementos de la lista */
 .nav-item:hover {
-    background-color: #2f2c79; /* Cambio de color de fondo al pasar el cursor */
+    background-color: #e2e2e2; /* Cambio de color de fondo al pasar el cursor */
 }
 
 
@@ -214,4 +214,9 @@ body{
     padding-left: 18%;
     top: 6em;
     width: 96%;
+}
+
+#tab:hover {
+    background-color: #e2e2e2;
+    
 }

@@ -18,4 +18,62 @@ class Migration(migrations.Migration):
             name='noticia',
             table='noticias',
         ),
+        migrations.RunSQL(
+            '''
+            CREATE OR REPLACE FUNCTION crear_noticia()
+            RETURNS TRIGGER AS $$
+            DECLARE
+                author_username TEXT;
+            BEGIN
+                SELECT username INTO author_username FROM usuarios WHERE id = NEW.usuario_id;
+                INSERT INTO auditoria_noticias (accion, noticia_id, titulo, usuario_id, fecha_hora)
+                VALUES ('CREAR', NEW.id, NEW.titulo, author_username, CURRENT_TIMESTAMP);
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;
+
+            CREATE TRIGGER noticia_crear_trigger
+            AFTER INSERT ON noticias
+            FOR EACH ROW
+            EXECUTE FUNCTION crear_noticia();
+
+            -- Trigger para actualizar una noticia y registrar la auditoría
+            CREATE OR REPLACE FUNCTION actualizar_noticia()
+            RETURNS TRIGGER AS $$
+            DECLARE
+                author_username TEXT;
+            BEGIN
+                SELECT username INTO author_username FROM usuarios WHERE id = NEW.usuario_id;
+                INSERT INTO auditoria_noticias (accion, noticia_id, titulo, usuario_id, fecha_hora)
+                VALUES ('ACTUALIZAR', NEW.id, NEW.titulo, author_username, CURRENT_TIMESTAMP);
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;
+
+            CREATE TRIGGER noticia_actualizar_trigger
+            AFTER UPDATE ON noticias
+            FOR EACH ROW
+            WHEN (OLD.* IS DISTINCT FROM NEW.*)
+            EXECUTE FUNCTION actualizar_noticia();
+
+            -- Trigger para eliminar una noticia y registrar la auditoría
+            CREATE OR REPLACE FUNCTION eliminar_noticia()
+            RETURNS TRIGGER AS $$
+            DECLARE
+                author_username TEXT;
+            BEGIN
+                SELECT username INTO author_username FROM usuarios WHERE id = OLD.usuario_id;
+                INSERT INTO auditoria_noticias (accion, noticia_id, titulo, usuario_id, fecha_hora)
+                VALUES ('ELIMINAR', OLD.id, OLD.titulo, author_username, CURRENT_TIMESTAMP);
+                RETURN OLD;
+            END;
+            $$ LANGUAGE plpgsql;
+
+            CREATE TRIGGER noticia_eliminar_trigger
+            BEFORE DELETE ON noticias
+            FOR EACH ROW
+            EXECUTE FUNCTION eliminar_noticia();
+            '''
+        ),    
+        
     ]

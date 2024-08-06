@@ -1,15 +1,15 @@
-var dataTableConsultas; // Variable global para almacenar la instancia de DataTable
+var dataTableAuUsuarios;
 
 $(document).ready(function() {
-    initDataTable(); // Inicializar DataTable al cargar la página
+    initDataTable();
 });
 
 function initDataTable() {
-    if (dataTableConsultas) {
-        dataTableConsultas.destroy(); // Destruir la instancia anterior si existe
+    if (dataTableAuUsuarios) {
+        dataTableAuUsuarios.destroy();
     }
 
-    dataTableConsultas = $('#datatable-consultas').DataTable({
+    dataTableAuUsuarios = $('#datatable_au_usuarios').DataTable({
         'lengthMenu': [5, 10, 25],
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/es-MX.json',

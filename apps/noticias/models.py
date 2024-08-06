@@ -18,3 +18,14 @@ class Noticia(models.Model):
     class Meta:
         ordering = ['-fecha']
         db_table = 'noticias'
+
+# clase para la auditoria de las noticias
+class AuditoriaNoticia(models.Model):
+    noticia_id = models.CharField(max_length=100)
+    titulo = models.CharField(max_length=100)
+    usuario_id = models.CharField(max_length=100)
+    accion = models.CharField(max_length=20)
+    fecha_hora = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'auditoria_noticias'

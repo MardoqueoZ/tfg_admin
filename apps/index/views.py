@@ -1,23 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import logout as django_logout
-from .forms import RegisterForm, LoginForm
+from apps.noticias.models import AuditoriaNoticia
+from .forms import LoginForm, FormCambioRol
 from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
-from .models import Usuario
-from django.contrib.auth.hashers import make_password
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
-from rest_framework import status
+from .models import AuditoriaUsuario, Usuario
 from django.contrib.auth.models import Group
 from django.contrib import messages
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.decorators import permission_classes
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import authentication_classes
-from .serializers import UsuarioSerializer
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def index(request):
     login_form = LoginForm()
     if request.method == 'POST':
@@ -40,49 +32,52 @@ def index(request):
     return render(request, 'inicio/index.html', {'login_form': login_form})
 
 
-# registro de usuario api, app flutter
-@api_view(['POST'])
-@permission_classes([AllowAny])  # Permitir el acceso sin autenticación
-def register_api(request):
-    serializer = UsuarioSerializer(data=request.data)
-    if serializer.is_valid():
-        password = request.data.get('password')
-        # Encriptar la contraseña antes de guardarla
-        hashed_password = make_password(password)
-        usuario = serializer.save(password=hashed_password)
-        usuario.save()
-        # despues de guardar el usuario, se crea un token de autenticacion
-        token = Token.objects.create(user=usuario)
-        
-        return JsonResponse({'token': token.key, "usuario": serializer.data, "message": "Registro exitoso"}, status=status.HTTP_201_CREATED)
-    return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# iniciar sesion api, app flutter
-@api_view(['POST'])
-@permission_classes([AllowAny])  # Permitir el acceso sin autenticación
-def login_api(request):
-    usuario = get_object_or_404(Usuario, ci=request.data['ci'])
-    if not usuario.check_password(request.data['password']):
-        return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_400_BAD_REQUEST)
-    # despues de verificar las credenciales, se crea o se obtiene el token de autenticacion
-    token, _ = Token.objects.get_or_create(user=usuario)
-    serializer = UsuarioSerializer(instance=usuario)
-    return Response({"token": token.key, "usuario": serializer.data, "user_id": usuario.id, "message": "Inicio de sesión exitoso"}, status=status.HTTP_200_OK)
-
-
-# cerrar sesion api, app flutter
-@api_view(['GET'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def logout_api(request):
-    request.auth.delete()
-    return Response({'message': 'Cierre de sesión exitoso'}, status=status.HTTP_200_OK)
-
-
 # Cierre de sesión
 def logout(request):
     django_logout(request)
     return redirect('index')
 
 
+# auditorias
+@login_required
+def auditorias(request):
+    registros_noticias = AuditoriaNoticia.objects.all()
+    registros_usuarios = AuditoriaUsuario.objects.all()
+    context = {
+        'registros_noticias': registros_noticias,
+        'registros_usuarios': registros_usuarios,
+    }
+    return render(request, "auditorias/auditoria.html", context)
     
+
+# lista de usuarios
+@login_required
+def listar_usuarios(request):
+    usuarios = Usuario.objects.all()
+    return render(request, 'inicio/usuarios.html', {'usuarios': usuarios})
+
+# editar rol de usuario
+@login_required
+def editar_rol(request, usuario_id):
+    usuario = Usuario.objects.get(pk=usuario_id)
+    grupos = Group.objects.all()
+    # Actualizar el rol del usuario
+    if request.method == 'POST':
+        form = FormCambioRol(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            return redirect('usuarios')
+    else:
+        grupo_actual = usuario.groups.first()
+        form = FormCambioRol(instance=usuario, initial={'groups': grupo_actual})
+
+    return render(request, 'inicio/editar_rol.html', {'form': form, 'usuario': usuario, 'grupos': grupos})
+
+# Auditoría Usuario
+@login_required
+def auditorias_usuarios(request):
+    registros_usuarios = AuditoriaUsuario.objects.all()
+    context = {
+        'registros_usuarios': registros_usuarios,
+    }
+    return render(request, "auditorias/auditoria_usuarios.html", context)

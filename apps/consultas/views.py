@@ -2,14 +2,6 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import authentication_classes, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
-from django.http import JsonResponse
-from apps.consultas.serializers import ConsultaSerializer
 from apps.mascotas.models import Mascota
 from .models import Consulta
 from .forms import FormConsulta
@@ -113,63 +105,3 @@ def eliminar_consulta(request, consulta_id, mascota_id):
     consulta.delete()
     
     return redirect('consultas', mascota_id=mascota_id)
-    
-
-# api listado de consultas
-@api_view(['GET'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def api_consultas(request, mascota_id) -> Response:
-    # obtener las consultas de la mascota
-    consultas = Consulta.objects.filter(mascota__id=mascota_id).values('id', 'fecha_consulta', 'motivo', 'indicacion', 'veterinario', 'mascota')
-    # Devolver las consultas en formato JSON
-    return JsonResponse(list(consultas), safe=False)
-
-# api crear consulta
-@api_view(['POST'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def api_crear_consulta(request, mascota_id) -> Response:
-    mascota = get_object_or_404(Mascota, pk=mascota_id)
-    if request.method == 'POST':
-        # se crea un serializador con los datos de la petición
-        serializer = ConsultaSerializer(data=request.data)
-        if serializer.is_valid():
-            # se guarda la consulta en la base de datos
-            serializer.save(mascota=mascota)
-            consulta_creada = serializer.instance
-            return Response({'consulta_id': consulta_creada.id, 'message': 'Registro de consulta exitosa'}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response({'error': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-# api editar consulta
-@api_view(['PUT'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def api_editar_consulta(request, consulta_id, mascota_id) -> Response:
-    if request.method == 'PUT':
-        # Obtener la vacunación a editar
-        consulta = Consulta.objects.filter(id=consulta_id, mascota=mascota_id).first()
-        if consulta:
-            serializer = ConsultaSerializer(consulta, data=request.data, partial=True)  # Se crea un serializador con los datos de la petición
-            if serializer.is_valid():
-                serializer.save()
-                return Response({'consulta_id': consulta.id, 'message': 'Actualización de consulta exitosa'}, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'error': 'No se encontró la consulta'}, status=status.HTTP_404_NOT_FOUND)
-    return Response({'error': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-# api eliminar consulta
-@api_view(['DELETE'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def api_eliminar_consulta(request, consulta_id, mascota_id) -> Response:
-    if request.method == 'DELETE':
-        # Obtener la vacunación a eliminar
-        consulta = Consulta.objects.filter(id=consulta_id, mascota=mascota_id).first()
-        if consulta:
-            consulta.delete()
-            return Response({'message': 'Eliminación de consulta exitosa'}, status=204)
-        return Response({'error': 'No se encontró la consulta'}, status=status.HTTP_404_NOT_FOUND)
-    return Response({'error': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

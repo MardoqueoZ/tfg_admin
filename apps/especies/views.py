@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
 from .models import Especie
 from .forms import EspecieForm
-from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 # especies
+@login_required
 def especies(request):
     especies = Especie.objects.all()
     return render(request, 'especies/index.html', {'especies': especies})
 
 # crear especie
+@login_required
 def crear_especie(request):
     if request.method == 'POST':
         form = EspecieForm(request.POST)
@@ -23,6 +25,7 @@ def crear_especie(request):
     return render(request, 'especies/crear.html', {'form': form})
 
 # editar especie
+@login_required
 def editar_especie(request, especie_id):
     especie = Especie.objects.get(id=especie_id)
     if request.method == 'GET':
@@ -35,13 +38,8 @@ def editar_especie(request, especie_id):
     return render(request, 'especies/editar.html', {'form': form, 'especie': especie})
 
 # eliminar especie
+@login_required
 def eliminar_especie(request, especie_id):
     especie = Especie.objects.get(id=especie_id)
     especie.delete()
     return redirect('especies')
-
-
-# obtener especie api
-def api_especies(request):
-    especies = Especie.objects.all().values('id','nombre')
-    return JsonResponse(list(especies), safe=False)

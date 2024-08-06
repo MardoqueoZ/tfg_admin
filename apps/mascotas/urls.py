@@ -6,10 +6,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('duenhos/buscar', views.buscar_duenho, name='buscar_duenho'),
     path('mascotas/<int:cedula>', views.ver_mascotas, name='ver_mascotas'),
-    # apis
-    path('mascota/registrar', views.registrar_mascota),
-    path('api/mascotas', views.obtener_mascotas),
-    path('mascota/<int:mascota_id>/editar', views.editar_mascota),
-    path('mascota/<int:mascota_id>/eliminar', views.eliminar_mascota),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
