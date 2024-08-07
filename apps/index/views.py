@@ -9,7 +9,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-@login_required
 def index(request):
     login_form = LoginForm()
     if request.method == 'POST':

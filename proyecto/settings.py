@@ -99,23 +99,23 @@ EMAIL_HOST_PASSWORD = 'mardoFlorentin@893'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_db',
-        'USER': 'postgres',
-        'PASSWORD': 'MZF121',
-        'HOST': 'localhost',
-        'PORT': 5433,
-    }
-}
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://postgres:MZF121@localhost:5433/django_db',
-        conn_max_age=600
-    )
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'django_db',
+#         'USER': 'postgres',
+#         'PASSWORD': 'MZF121',
+#         'HOST': 'localhost',
+#         'PORT': 5433,
+#     }
+# }
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgres://postgres:MZF121@localhost:5433/django_db',
+#         conn_max_age=600
+#     )
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
