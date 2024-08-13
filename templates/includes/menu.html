@@ -4,10 +4,17 @@
 </head>
 
 <body>
+    <!-- Toggle Button -->
+    <button class="btn btn-primary" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div class="menu" id="sidebar-wrapper">
-            <div class="sidebar-heading text-light bg-primary"></div>
+            <div class="sidebar-heading">
+                <center><img src="{% static 'images/logo.png' %}" alt="Logo" class="img-fluid" id="logoMenu"></center>
+            </div>
             <ul class="nav flex-column list-group list-group-flush">
                 <!-- Noticias -->
                 <li class="nav-item">
@@ -43,10 +50,23 @@
                     </li>
                     <!-- Auditorías -->
                     <li class="nav-item">
-                        <a href="{% url 'auditorias' %}" class="nav-link text-light">
+                        <a class="nav-link text-light" data-bs-toggle="collapse" href="#auditoriasCollapse" role="button" aria-expanded="false" aria-controls="auditoriasCollapse">
                             <i class="fas fa-clipboard-list"></i> Auditorías
                         </a>
+                        <div class="collapse" id="auditoriasCollapse">
+                            <ul class="nav flex-column submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" href="{% url 'auditoria_noticias' %}">Noticias</a>
+                                </li>
+                                {% if request.user.is_superuser %}
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" href="{% url 'auditoria_usuarios' %}">Usuarios</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
                     </li>
+
                 {% endif %}
                 <!-- Cerrar Sesión -->
                 <li class="nav-item">
@@ -59,8 +79,8 @@
         <!-- /#sidebar-wrapper -->
 
         <!-- Confirm Modal -->
-        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
@@ -76,77 +96,25 @@
                 </div>
             </div>
         </div>
-    </div>
     <!-- /#wrapper -->
 
-    <!-- Script para toggle del sidebar -->
     <script>
-        document.getElementById('menu-toggle').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('wrapper').classList.toggle('toggled');
+        document.addEventListener("DOMContentLoaded", function() {
+            const wrapper = document.getElementById("wrapper");
+            const menuToggle = document.getElementById("menu-toggle");
+        
+            // Oculta el menú por defecto en pantallas pequeñas
+            if (window.innerWidth <= 767.98) {
+                wrapper.classList.add("toggled");
+            }
+        
+            // Alterna el menú cuando se hace clic en el botón
+            menuToggle.addEventListener("click", function(e) {
+                e.preventDefault();
+                wrapper.classList.toggle("toggled");
+            });
         });
+        
+        
     </script>
-
-    <style>
-        #wrapper.toggled #sidebar-wrapper {
-            margin-left: -250px;
-        }
-
-        #sidebar-wrapper {
-            width: 250px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            z-index: 1000;
-            overflow-y: auto;
-            background: #001f3f;
-            color: #fff;
-            transition: margin 0.25s ease-out;
-        }
-
-        #page-content-wrapper {
-            flex: 1;
-            padding-left: 250px;
-            transition: padding 0.25s ease-out;
-        }
-
-        #wrapper.toggled #page-content-wrapper {
-            padding-left: 0;
-        }
-
-        .sidebar-heading {
-            padding: 1rem;
-            font-size: 1.25rem;
-            text-align: center;
-            background-color: #203354;
-            color: #fff;
-        }
-
-        .nav-item {
-            margin-top: 10px;
-            padding: 10px 0;
-        }
-
-        .nav-item a {
-            font-size: 16px;
-            padding: 8px 15px;
-            color: #fff;
-            text-decoration: none;
-            display: block;
-        }
-
-        .nav-item i.fas {
-            font-size: 16px;
-            margin-right: 10px;
-        }
-
-        .nav-item:hover {
-            background-color: #2f2c79;
-        }
-
-        .card-body {
-            margin: 10px 0;
-        }
-    </style>
 </body>

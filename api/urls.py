@@ -7,14 +7,16 @@ urlpatterns = [
     path('api/register/', views.register_api),
     path('api/logout/', views.logout_api),
     # ESPECIES
-    path('api/especies', views.api_especies),
+    path('api/especies/', views.api_especies),
     # MASCOTAS
-    path('mascota/registrar', views.registrar_mascota),
-    path('api/mascotas', views.obtener_mascotas),
-    path('mascota/<int:mascota_id>/editar', views.editar_mascota),
-    path('mascota/<int:mascota_id>/eliminar', views.eliminar_mascota),
+    path('mascota/registrar/', views.registrar_mascota),
+    path('api/mascotas/', views.obtener_mascotas),
+    path('mascota/<int:mascota_id>/editar/', views.editar_mascota),
+    path('mascota/<int:mascota_id>/eliminar/', views.eliminar_mascota),
     # NOTICIAS
     path('api/noticias/', views.api_noticias, name='api_noticias'),
+    # RECOMENDACIONES
+    path('api/recomendaciones/', views.api_recomendaciones),
     # TRATAMIENTOS
     path('api/tratamientos/<int:mascota_id>/', views.api_tratamientos),
     path('api/tratamiento/crear/<int:mascota_id>/', views.api_crear_tratamiento),

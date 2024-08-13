@@ -3,6 +3,7 @@ from apps.mascotas.models import Mascota
 from apps.consultas.models import Consulta
 from apps.especies.models import Especie
 from apps.noticias.models import Noticia
+from apps.recomendaciones.models import Recomendacion
 from .serializers import *
 from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
@@ -173,7 +174,12 @@ def api_noticias(request):
     # Devolver las noticias en formato JSON
     return JsonResponse(list(noticias), safe=False)
 
-
+# RECOMENDACIONES
+def api_recomendaciones(request):
+    # obtener todas las recomendaciones con los campos titulo, contenido y foto_url
+    recomendaciones = Recomendacion.objects.all().values('nombre', 'contenido', 'especie', 'autor')
+    # Devolver las recomendaciones en formato JSON
+    return JsonResponse(list(recomendaciones), safe=False)
 # TRATAMIENTOS.
 # api lista de tratamientos
 @api_view(['GET'])

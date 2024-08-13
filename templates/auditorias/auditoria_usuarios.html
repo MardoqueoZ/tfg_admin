@@ -1,4 +1,15 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>Auditoria de Usuarios</title>
+{% endblock %}
+
 {% block content %}
+<div class="cuerpo">
+    <div class="d-none d-md-block">
+        <h1 class="">Auditoría de Usuarios</h1>
+    </div>
     <!-- Tabla -->
     <div class="row">
         <div class="col-12">
@@ -26,4 +37,9 @@
             </div>
         </div>
     </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'local/js/auditoria_usuario.js' %}"></script>
 {% endblock %}

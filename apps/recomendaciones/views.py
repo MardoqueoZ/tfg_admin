@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from apps.especies.models import Especie
 from .models import Recomendacion
 from .forms import RecomendacionForm
 from django.contrib.auth import get_user
@@ -14,6 +16,7 @@ def recomendaciones(request):
 # crear recomendacion
 @login_required
 def crear_recomendacion(request):
+    especies = Especie.objects.all()
     if request.method == 'POST':
         form = RecomendacionForm(request.POST)
         if form.is_valid():
@@ -23,11 +26,12 @@ def crear_recomendacion(request):
             return redirect('recomendaciones')
     else:
         form = RecomendacionForm()
-    return render(request, 'recomendaciones/crear.html', {'form': form})
+    return render(request, 'recomendaciones/crear.html', {'form': form, 'especies': especies})
 
 # editar recomendacion
 @login_required
 def editar_recomendacion(request, reco_id):
+    especies = Especie.objects.all()
     recomendacion = Recomendacion.objects.get(id=reco_id)
     if request.method == 'POST':
         form = RecomendacionForm(request.POST, instance=recomendacion)
@@ -36,7 +40,7 @@ def editar_recomendacion(request, reco_id):
             return redirect('recomendaciones')
     else:
         form = RecomendacionForm(instance=recomendacion)
-    return render(request, 'recomendaciones/editar.html', {'form': form, 'recomendacion': recomendacion})
+    return render(request, 'recomendaciones/editar.html', {'form': form, 'recomendacion': recomendacion, 'especies': especies})
 
 # ver recomendacion
 @login_required

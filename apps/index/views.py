@@ -36,17 +36,6 @@ def logout(request):
     django_logout(request)
     return redirect('index')
 
-
-# auditorias
-@login_required
-def auditorias(request):
-    registros_noticias = AuditoriaNoticia.objects.all()
-    registros_usuarios = AuditoriaUsuario.objects.all()
-    context = {
-        'registros_noticias': registros_noticias,
-        'registros_usuarios': registros_usuarios,
-    }
-    return render(request, "auditorias/auditoria.html", context)
     
 
 # lista de usuarios
@@ -74,7 +63,7 @@ def editar_rol(request, usuario_id):
 
 # Auditoría Usuario
 @login_required
-def auditorias_usuarios(request):
+def auditoria_usuarios(request):
     registros_usuarios = AuditoriaUsuario.objects.all()
     context = {
         'registros_usuarios': registros_usuarios,

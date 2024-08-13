@@ -16,6 +16,13 @@
                         <input type="text" name="nombre" id="nombre" class="form-control" value="{{ recomendacion.nombre }}">
                         <label for="contenido">Contenido</label>
                         <textarea name="contenido" id="contenido" class="form-control" rows="5">{{ recomendacion.contenido }}</textarea>
+                        <label for="especie">Especie</label>
+                        <select name="especie" id="especie" class="form-control">
+                            <option value="">Seleccione una especie</option>
+                            {% for especie in especies %}
+                                <option value="{{ especie.id }}" {% if especie.id == recomendacion.especie.id %} selected {% endif %}>{{ especie.nombre }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <br>
                     <div class="form-group">
