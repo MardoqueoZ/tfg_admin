@@ -601,12 +601,15 @@ body{
     
     /* Ajustes para el contenido de la página */
     .cuerpo {
-        padding-left: 4%;
-        position: relativo; /* Cambiado a 'relative' para evitar el desplazamiento fijo */
-        width: 84%; /* Ancho completo */
+        padding-left: 5%;
+        position: absolute; /* Cambiado a 'relative' para evitar el desplazamiento fijo */
+        width: 90%; /* Ancho completo */
         top: 4em; /* Reducir el desplazamiento desde la parte superior */
-        padding-top: 6em;
+        padding-top: 3em;
     }
+    
+
+    
     
 }
 

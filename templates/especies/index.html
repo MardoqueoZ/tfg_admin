@@ -16,23 +16,23 @@
     <br>
     <div class="row">
         {% for especie in especies %}
-        <div class="col-4">
-            <div class="card">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <div class="card" id="card-especie">
                 <div class="card-body">
                     <h5 class="card-title">{{ especie.nombre }}</h5>
                     <p class="card-text">{{ especie.descripcion }}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <a href="{% url 'editar_especie' especie.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal{{ especie.id }}">
                         <i class="fas fa-trash"></i>
                     </button>
                     
-                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal fade" id="myModal{{ especie.id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ especie.id }}" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel{{ especie.id }}">Confirmación</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -50,6 +50,7 @@
         </div>
         {% endfor %}
     </div>
+    
 </div>
 
 {% endblock content %}

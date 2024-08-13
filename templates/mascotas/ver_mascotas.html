@@ -23,7 +23,7 @@
         <br>
         <div class="row">
             {% for mascota in mascotas %}
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="lista_de_mascotas">
                     <div class="card">
                         <img src="{{ mascota.imagen_url }}" class="card-img-top" alt="...">
@@ -41,7 +41,7 @@
                                     <i class="fas fa-info-circle"></i>
                                 </a>
                                 <!-- vacunaciones -->
-                                <a href="{% url 'vacunaciones' mascota.id %} " class="btn btn-success btn-lg" title="Vacunaciones">
+                                <a href="{% url 'vacunaciones' mascota.id %}" class="btn btn-success btn-lg" title="Vacunaciones">
                                     <i class="fas fa-syringe"></i>
                                 </a>
                                 <!-- Tratamientos -->
@@ -59,6 +59,7 @@
             </div>
             {% endfor %}
         </div>
+        
     </div>
 {% endblock %}
 
