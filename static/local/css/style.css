@@ -448,11 +448,13 @@ body{
 
     /* contenido de la pagina */
     .cuerpo {
-        width: 110%;
+        width: 100%;
         /* centrar el contenido */
-        padding-left: 2em;
+        padding-left: 3em;
         padding-right: 2em;
         top: 10em;
+        padding-top: 6em;
+        font-size: 2em;
     }
 }
 
@@ -599,10 +601,11 @@ body{
     
     /* Ajustes para el contenido de la página */
     .cuerpo {
-        padding: 1em; /* Menor padding para pantallas pequeñas */
-        padding-left: 5%; /* Alinear más al centro */
-        width: 100%; /* Ancho completo */
+        padding-left: 4%;
+        position: relativo; /* Cambiado a 'relative' para evitar el desplazamiento fijo */
+        width: 84%; /* Ancho completo */
         top: 4em; /* Reducir el desplazamiento desde la parte superior */
+        padding-top: 6em;
     }
     
 }
