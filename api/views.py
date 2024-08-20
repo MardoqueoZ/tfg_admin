@@ -40,8 +40,9 @@ storage = firebase.storage()
 def register_api(request):
     # Verificar si el usuario ya existe
     ci = request.data.get('ci')
-    if Usuario.objects.filter(ci=ci).exists():
-        return JsonResponse({'error': 'El usuario ya existe'}, status=status.HTTP_409_CONFLICT)
+    username = request.data.get('username')
+    if Usuario.objects.filter(ci=ci).exists() or Usuario.objects.filter(username=username).exists():
+        return JsonResponse({'error': 'El usuario ya existe '}, status=status.HTTP_409_CONFLICT)
     
     serializer = UsuarioSerializer(data=request.data)
     if serializer.is_valid():

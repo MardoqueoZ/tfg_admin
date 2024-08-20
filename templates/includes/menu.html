@@ -18,55 +18,54 @@
             <ul class="nav flex-column list-group list-group-flush">
                 <!-- Noticias -->
                 <li class="nav-item">
-                    <a href="{% url 'noticias' %}" class="nav-link text-light">
+                    <a href="{% url 'noticias' %}" class="nav-link text-light {% if request.resolver_match.url_name == 'noticias' %}active{% endif %}">
                         <i class="fas fa-home"></i> Noticias
                     </a>
                 </li>
                 <!-- Recomendaciones -->
                 <li class="nav-item">
-                    <a href="{% url 'recomendaciones' %}" class="nav-link text-light">
+                    <a href="{% url 'recomendaciones' %}" class="nav-link text-light {% if request.resolver_match.url_name == 'recomendaciones' %}active{% endif %}">
                         <i class="fas fa-notes-medical"></i> Recomendaciones
                     </a>
                 </li>
                 <!-- Especies -->
                 <li class="nav-item">
-                    <a href="{% url 'especies' %}" class="nav-link text-light">
+                    <a href="{% url 'especies' %}" class="nav-link text-light {% if request.resolver_match.url_name == 'especies' %}active{% endif %}">
                         <i class="fas fa-dog"></i> Especies
                     </a>
                 </li>
                 <!-- Buscar -->
                 <li class="nav-item">
-                    <a href="{% url 'buscar_duenho' %}" class="nav-link text-light">
+                    <a href="{% url 'buscar_duenho' %}" class="nav-link text-light {% if request.resolver_match.url_name == 'buscar_duenho' %}active{% endif %}">
                         <i class="fas fa-search"></i> Buscar
                     </a>
                 </li>
-
+            
                 {% if request.user.is_superuser %}
                     <!-- Usuarios -->
                     <li class="nav-item">
-                        <a href="{% url 'usuarios' %}" class="nav-link text-light">
+                        <a href="{% url 'usuarios' %}" class="nav-link text-light {% if request.resolver_match.url_name == 'usuarios' %}active{% endif %}">
                             <i class="fas fa-users"></i> Usuarios
                         </a>
                     </li>
                     <!-- Auditorías -->
                     <li class="nav-item">
-                        <a class="nav-link text-light" data-bs-toggle="collapse" href="#auditoriasCollapse" role="button" aria-expanded="false" aria-controls="auditoriasCollapse">
+                        <a class="nav-link text-light {% if request.resolver_match.url_name == 'auditoria_noticias' or request.resolver_match.url_name == 'auditoria_usuarios' %}active{% endif %}" data-bs-toggle="collapse" href="#auditoriasCollapse" role="button" aria-expanded="false" aria-controls="auditoriasCollapse">
                             <i class="fas fa-clipboard-list"></i> Auditorías
                         </a>
                         <div class="collapse" id="auditoriasCollapse">
                             <ul class="nav flex-column submenu">
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" href="{% url 'auditoria_noticias' %}">Noticias</a>
+                                    <a class="nav-link text-light {% if request.resolver_match.url_name == 'auditoria_noticias' %}active{% endif %}" href="{% url 'auditoria_noticias' %}">Noticias</a>
                                 </li>
                                 {% if request.user.is_superuser %}
                                     <li class="nav-item">
-                                        <a class="nav-link text-light" href="{% url 'auditoria_usuarios' %}">Usuarios</a>
+                                        <a class="nav-link text-light {% if request.resolver_match.url_name == 'auditoria_usuarios' %}active{% endif %}" href="{% url 'auditoria_usuarios' %}">Usuarios</a>
                                     </li>
                                 {% endif %}
                             </ul>
                         </div>
                     </li>
-
                 {% endif %}
                 <!-- Cerrar Sesión -->
                 <li class="nav-item">
@@ -75,6 +74,7 @@
                     </a>
                 </li>
             </ul>
+            
         </div>
         <!-- /#sidebar-wrapper -->
 
