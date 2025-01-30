@@ -43,7 +43,11 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{% url 'editar_rol' usuario.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                {% if usuario.is_superuser %}
+                                    Acciones no disponibles
+                                {% else %}
+                                    <a href="{% url 'editar_rol' usuario.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
