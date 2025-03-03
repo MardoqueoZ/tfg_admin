@@ -109,23 +109,24 @@ EMAIL_HOST_PASSWORD = 'mardoFlorentin@893'
 #         'PORT': 5433,
 #     }
 # }
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://db_prueba_akpx_user:vClA7gV2lJWt19cJqsM2imynndYo6plM@dpg-cud4ltd2ng1s73bcoihg-a.oregon-postgres.render.com/db_prueba_akpx',
-        conn_max_age=600
-    )
-}
+# DATABASE_URL="postgresql://postgres:BqRoFVJA9bECeJez@db.rqjpdfqjwrcyzddbtdip.supabase.co:5432/postgres"
+# import dj_database_url
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'db_prueba_akpx',
-#         'USER': 'db_prueba_akpx_user',
-#         'PASSWORD': 'vClA7gV2lJWt19cJqsM2imynndYo6plM',
-#         'HOST': 'dpg-cud4ltd2ng1s73bcoihg-a',
-#         'PORT': 5432,
-#     }
+#     'default': dj_database_url.config(
+#         default=DATABASE_URL,
+#         conn_max_age=600
+#     )
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wjqymdmptzkbrumcwuuv',
+        'USER': 'postgres',
+        'PASSWORD': 'ssNajdRWMjK18Fzw',
+        'HOST': 'wjqymdmptzkbrumcwuuv.db.us-west-2.nhost.run',
+        'PORT': 5432,
+    }
+}
 
 
 # Password validation
